@@ -22,8 +22,6 @@ class OrderItemFactory extends Factory
             //
             'order_id' => 1,
             'product_id' => 1,
-            
-
         ];
     }
 }
