@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         // 
         $productList = Product::all();
-        return view('products.index',['productList' => $productList]);
+        return view('products.index', ['productList' => $productList]);
     }
 
     /**
@@ -48,8 +48,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        return view('products.show',['product' => $product]);
+        $product = Product::findOrFail($id);
+        return view('products.show', ['product' => $product]);
     }
 
     /**
@@ -84,5 +84,36 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function addToCart(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $cart = session()->get('cart');
+
+        // Nếu giỏ hàng trống, tạo một mảng mới để lưu trữ sản phẩm
+        if (!$cart) {
+            $cart = [
+                $id => ["name" => $product->name,                "quantity" => $request->quantity,                "price" => $product->price]
+            ];
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Product added to cart successfully!');
+        }
+
+        // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng sản phẩm
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $request->quantity;
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Product added to cart successfully!');
+        }
+
+        // Nếu sản phẩm không tồn tại trong giỏ hàng, thêm sản phẩm mới vào giỏ hàng
+        $cart[$id] = ["name" => $product->name,        "quantity" => $request->quantity,        "price" => $product->price];
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 }

@@ -3,8 +3,9 @@
 @section('title', 'List Product')
 
 @section('content')
-<!-- <section class="sec-product-detail bg0 p-t-65 p-b-60">
-<div class="container">
+
+<section class="sec-product-detail bg0 p-t-65 p-b-60">
+    <div class="container">
         <div class="row">
             <div class="col-md-6 col-lg-7 p-b-30">
                 <div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -54,7 +55,7 @@
                     </h4>
 
                     <span class="mtext-106 cl2">
-                    {{ $product->price}}
+                        {{ $product->price}}
                     </span>
 
                     <p class="stext-102 cl3 p-t-23">
@@ -101,25 +102,12 @@
                             </div>
                         </div>
 
-                        <div class="flex-w flex-r-m p-b-10">
-                            <div class="size-204 flex-w flex-m respon6-next">
-                                <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                        <i class="fs-16 zmdi zmdi-minus"></i>
-                                    </div>
-
-                                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                        <i class="fs-16 zmdi zmdi-plus"></i>
-                                    </div>
-                                </div>
-
-                                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                    Add to cart
-                                </button>
-                            </div>
-                        </div>
+                        <form action="{{ route('products.addToCart', $product->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="number" name="quantity" value="1">
+                            <button type="submit">Add to cart</button>
+                        </form>
                     </div>
 
                     <!--  -->
@@ -330,6 +318,5 @@
             Categories: Jacket, Men
         </span>
     </div>
-</section> -->
-<h1>hello</h1>
+</section>
 @endsection

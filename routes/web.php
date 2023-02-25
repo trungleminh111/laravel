@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout');
 });
 
 Route::prefix('admin')->group(function(){
@@ -45,6 +45,7 @@ Route::post('/post', function () {
 Route::put('/put', function () {
     echo 'method put';
 });
+
 Route::resource('users',UserController::class);
 Route::resource('categories',CategoryController::class);
 Route::resource('products',ProductController::class);
@@ -53,4 +54,8 @@ Route::resource('orderitems',OrderItemController::class);
 
 Route::get('/child',function(){
     return view('child');
+});
+
+Route::group(['prefix' => 'admin'], function(){
+    Route::resource('users',App\Http\Controllers\Admin\UserController::class,['names' => 'admin.users']);
 });
