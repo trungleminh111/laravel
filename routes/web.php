@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
@@ -51,6 +52,8 @@ Route::resource('categories',CategoryController::class);
 Route::resource('products',ProductController::class);
 Route::resource('orders',OrderController::class);
 Route::resource('orderitems',OrderItemController::class);
+Route::resource('cart',CartController::class);
+
 
 Route::get('/child',function(){
     return view('child');
@@ -58,4 +61,12 @@ Route::get('/child',function(){
 
 Route::group(['prefix' => 'admin'], function(){
     Route::resource('users',App\Http\Controllers\Admin\UserController::class,['names' => 'admin.users']);
+
+    //
+    Route::resource('products', App\Http\Controllers\Admin\ProductController::class,['names' =>'admin.products']);
+
+    //
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class,['names' =>'admin.categories']);
+   
 });
+

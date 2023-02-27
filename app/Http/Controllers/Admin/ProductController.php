@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // 
+        //
         $productList = Product::all();
-        return view('products.index', ['productList' => $productList]);
+        return view('admin.products.index', ['productList' => $productList]);
     }
 
     /**
@@ -27,6 +28,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('admin.products.create');
     }
 
     /**
@@ -38,6 +40,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $product = Product::create($request->only(['name', 'img', 'desc','price','category_id']));
+        $message = "Seccess full Created";
+        if($product == null){
+            $message = "Seccess full failed";
+        }
+        return redirect()->route('admin.products.index')->with('message', $message);
     }
 
     /**
@@ -48,8 +56,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('products.show', ['product' => $product]);
+        //
     }
 
     /**
@@ -61,6 +68,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        $product = Product::findOrFail($id);
+        return view('admin.products.edit', compact('product'));
     }
 
     /**
@@ -73,6 +82,14 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $product = Product::findOrFail($id);
+        $bool = $product->update($request->only(['name', 'img', 'desc','category_id','price']));
+        $message = "Seccess full Created";
+        if(!$bool){
+            $message = "Seccess full failed";
+
+        }
+        return redirect()->route('admin.products.index')->with('message', $message);
     }
 
     /**
@@ -84,6 +101,11 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+        $message = "Seccess full deleted";
+        if (!Product::destroy($id)) {
+            $message = "Seccess full failed";
+        }
+
+        return redirect()->route('admin.products.index')->with('message', $message);
     }
-   
 }

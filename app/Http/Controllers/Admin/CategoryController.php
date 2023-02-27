@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Product;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // 
-        $productList = Product::all();
-        return view('products.index', ['productList' => $productList]);
+        //
+        $categoryList = Category::all();
+        return view('admin.categories.index', ['categoryList' => $categoryList]);
     }
 
     /**
@@ -27,6 +28,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('admin.categories.create');
     }
 
     /**
@@ -38,6 +40,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $category = Category::create($request->only(['name','desc']));
+        $message = "Seccess full Created";
+        if($category == null){
+            $message = "Seccess full failed";
+        }
+        return redirect()->route('admin.categories.index')->with('message', $message);
     }
 
     /**
@@ -48,8 +56,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('products.show', ['product' => $product]);
+        //
     }
 
     /**
@@ -61,6 +68,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        $category = Category::findOrFail($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -73,6 +82,15 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $category = Category::findOrFail($id);
+        $bool = $category->update($request->only(['name','desc']));
+        $message = "Seccess full Created";
+        if(!$bool){
+            $message = "Seccess full failed";
+
+        }
+        return redirect()->route('admin.categories.index')->with('message', $message);
+       
     }
 
     /**
@@ -84,6 +102,11 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+        $message = "Seccess full deleted";
+        if (!Category::destroy($id)) {
+            $message = "Seccess full failed";
+        }
+
+        return redirect()->route('admin.products.index')->with('message', $message);
     }
-   
 }

@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="{{ url('./public/assets/css/shared/style.css') }}">
     <!-- endinject -->
     <!-- Layout styles -->
+    
     <link rel="stylesheet" href="{{ url('./public/assets/css/demo_1/style.css') }}">
+    <link rel="stylesheet" href="{{ url('./public/css/util.css') }}">
     <!-- End Layout styles -->
     <link rel="shortcut icon" href="{{ url('./public/assets/images/favicon.ico') }}" />
   </head>

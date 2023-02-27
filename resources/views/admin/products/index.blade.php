@@ -4,8 +4,8 @@
 <h3>{{ Session::get('message') }}</h3>
 @endif
 <div class="row">
-    <a  href="{{ route('admin.users.create') }}"> Create New</a>
-    <div class="col-lg-6 grid-margin stretch-card">
+    <a class="" href="{{ route('admin.products.create') }}"> Create New</a>
+    <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Basic Table</h4>
@@ -15,23 +15,29 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <th>Img</th>
+                            <th>Desc</th>
+                            <th>Price</th>
+                            <TH>Category</TH>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($userList as $user)
+                   
+                        @foreach($productList as $product)
                         <tr>
                             <td>#</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->img }}</td>
+                            <td>{{ $product->decs }}</td>
+                            <td>{{ $product->price }}</td>
+                            <td>{{ $product->category_id }}</td>
                             <td>
-                                <a class="badge badge-danger" href="{{ route('admin.users.edit',$user->id) }}">Pending</a>
+                                <a class="badge badge-danger" href="{{ route('admin.products.edit',$product->id) }}">Pending</a>
                             </td>
 
                             <td>
-                                <form action="{{ route('admin.users.destroy',$user->id) }}" method="post">
+                                <form action="{{ route('admin.products.destroy',$product->id) }}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button type="submit">Delete</button>
