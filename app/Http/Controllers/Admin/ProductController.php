@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+      
         $product = Product::create($request->only(['name', 'img', 'desc','price','category_id']));
         $message = "Seccess full Created";
         if($product == null){
@@ -82,6 +84,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+      
         $product = Product::findOrFail($id);
         $bool = $product->update($request->only(['name', 'img', 'desc','category_id','price']));
         $message = "Seccess full Created";

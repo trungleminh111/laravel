@@ -18,9 +18,11 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        $index = 0;
         return [
             //
-            'img' => $this->faker->name(),
+            
+            'img' => 'public/images/product-0'.++$index.'.jpg',
             'name' => $this->faker->name(),
           
             'desc' => $this->faker->url(),

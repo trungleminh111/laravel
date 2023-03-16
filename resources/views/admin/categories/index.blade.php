@@ -1,7 +1,7 @@
 @extends('admin.layout')
 @section('content')
-@if(Session::has('message'))
-<h3>{{ Session::get('message') }}</h3>
+@if(Session::has('status'))
+<h3>{{ Session::get('status') }}</h3>
 @endif
 <div class="row">
     
@@ -21,20 +21,20 @@
                         </tr>
                     </thead>
                     
-                        @foreach($categoryList as $category)
+                        @foreach($cates as $category)
                         <tr>
                             <td>#</td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->email }}</td>
                             <td>
-                                <a class="badge badge-warning btn btn-warning" href="{{ route('admin.categories.edit',$category->id) }}">Pending</a>
+                                <a class="badge badge-warning btn btn-warning" href="{{ route('admin.categories.edit',$category->id) }}">Edit</a>
                             </td>
 
                             <td>
                                 <form action="{{ route('admin.categories.destroy',$category->id) }}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                    <button class="btn btn-danger" onclick="return confirm('bạn muốn xóa mục này');">Delete</button>
                                 </form>
                             </td>
                         </tr>

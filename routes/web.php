@@ -6,7 +6,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use Database\Factories\CategoryFactory;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,18 +21,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layout');
-});
-
-Route::prefix('admin')->group(function(){
-    Route::get('post/{post}/comments/{comment}', function ($postId,$commentId) {
+Route::get('/',[ProductController::class,'index']);
+Route::prefix('admin')->group(function () {
+    Route::get('post/{post}/comments/{comment}', function ($postId, $commentId) {
         return "postId: $postId - commentId: $commentId";
     });
-    Route::get('user/{name?}', function ($name ='john') {
-       return $name;
+    Route::get('user/{name?}', function ($name = 'john') {
+        return $name;
     });
-
 });
 
 Route::get('/home', function () {
@@ -47,26 +44,34 @@ Route::put('/put', function () {
     echo 'method put';
 });
 
-Route::resource('users',UserController::class);
-Route::resource('categories',CategoryController::class);
-Route::resource('products',ProductController::class);
-Route::resource('orders',OrderController::class);
-Route::resource('orderitems',OrderItemController::class);
-Route::resource('cart',CartController::class);
+Route::resource('users', UserController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('products', ProductController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('orderitems', OrderItemController::class);
 
 
-Route::get('/child',function(){
+
+Route::get('/child', function () {
     return view('child');
 });
 
-Route::group(['prefix' => 'admin'], function(){
-    Route::resource('users',App\Http\Controllers\Admin\UserController::class,['names' => 'admin.users']);
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class, ['names' => 'admin.users']);
 
     //
-    Route::resource('products', App\Http\Controllers\Admin\ProductController::class,['names' =>'admin.products']);
+    Route::resource('products', App\Http\Controllers\Admin\ProductController::class, ['names' => 'admin.products']);
 
     //
-    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class,['names' =>'admin.categories']);
-   
+
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class, ['names' => 'admin.categories']);
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth.check'])->group(function () {
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+});

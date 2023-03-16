@@ -15,7 +15,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        return Category::all();
+        $catgoryList = Category::all();
+        return view('inc.baner',['categoryList' => $catgoryList]);
     }
 
     /**

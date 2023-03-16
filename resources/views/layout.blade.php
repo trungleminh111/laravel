@@ -15,7 +15,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ url('./public/fonts/iconic/css/material-design-iconic-font.min.css') }}" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ url('./public/fonts/linearicons-v1.0.0/icon-font.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url( './public/fonts/linearicons-v1.0.0/icon-font.min.css') }}" />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ url('./public/vendor/animate/animate.css') }}" />
     <!--===============================================================================================-->
@@ -34,7 +34,9 @@
 
 <body>
 
+
 @include('inc.header')
+
 @yield('content')
 @include('inc.footer')
 

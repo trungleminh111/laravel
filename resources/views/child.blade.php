@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('products.index')
 
 @section('titel','Page Child')
 

@@ -21,6 +21,7 @@
     <link rel="shortcut icon" href="{{ url('./public/assets/images/favicon.ico') }}" />
   </head>
   <body>
+ 
     <div class="container-scroller">
     @include('admin.inc.navbar')
       <!-- partial -->

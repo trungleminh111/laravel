@@ -5,7 +5,7 @@
 @endif
 <div class="row">
     <a  href="{{ route('admin.users.create') }}"> Create New</a>
-    <div class="col-lg-6 grid-margin stretch-card">
+    <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Basic Table</h4>
@@ -16,6 +16,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Password</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -26,6 +27,7 @@
                             <td>#</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->password }}</td>
                             <td>
                                 <a class="badge badge-danger" href="{{ route('admin.users.edit',$user->id) }}">Pending</a>
                             </td>

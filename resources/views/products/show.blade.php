@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                       
+
                     </div>
 
                     <!--  -->
@@ -125,8 +125,17 @@
                             <i class="fa fa-google-plus"></i>
                         </a>
                     </div>
+                   
+                    <div>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                            @csrf
+                            <input type="number" name="quantity" value="1" min="1">
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+
         </div>
 
         <div class="bor10 m-t-50 p-t-43 p-b-40">
